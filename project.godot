@@ -15,6 +15,7 @@ run/main_scene="uid://cx236gdnydn1k"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="uid://bj3q4co6v64uq"
 config/size/resizable=true
+<<<<<<<HEADconfig/name="2d Sonic Game Test"
 
 [display]
 
