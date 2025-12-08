@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://ct5mc1gk0gqw5"]
+[gd_scene load_steps=69 format=3 uid="uid://ct5mc1gk0gqw5"]
 
 [ext_resource type="Script" uid="uid://fmoj14cqrk48" path="res://Objects/Player/Player.gd" id="1_we6tp"]
 [ext_resource type="Texture2D" uid="uid://lr8h80kd0o6b" path="res://sprites/sonicsheet.png" id="2_oansn"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://csvkopdjch2gg" path="res://Objects/Player/skid.mp3" id="5_b872d"]
 [ext_resource type="AudioStream" uid="uid://b1sq5grex7x7b" path="res://Objects/Player/roll.mp3" id="6_nd6ml"]
 [ext_resource type="AudioStream" uid="uid://7n7gltfimw2i" path="res://Objects/Player/footstep.mp3" id="6_y01d7"]
-[ext_resource type="AudioStream" uid="uid://6kud7kl6y8ab" path="res://Objects/Player/sonicboom.mp3" id="9_7t0p5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_861e5"]
 size = Vector2(46, 48)
@@ -180,6 +179,14 @@ region = Rect2(448, 256, 64, 64)
 atlas = ExtResource("2_oansn")
 region = Rect2(512, 256, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jier"]
+atlas = ExtResource("2_oansn")
+region = Rect2(576, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gfpt"]
+atlas = ExtResource("2_oansn")
+region = Rect2(640, 256, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dtdx5"]
 atlas = ExtResource("2_oansn")
 region = Rect2(256, 192, 64, 64)
@@ -191,14 +198,6 @@ region = Rect2(320, 192, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_xmen4"]
 atlas = ExtResource("2_oansn")
 region = Rect2(384, 192, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7jier"]
-atlas = ExtResource("2_oansn")
-region = Rect2(576, 256, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6gfpt"]
-atlas = ExtResource("2_oansn")
-region = Rect2(640, 256, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_keln3"]
 atlas = ExtResource("2_oansn")
@@ -414,15 +413,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0nr70")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dtdx5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_24jte")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xmen4")
 }],
 "loop": true,
 "name": &"spindash",
@@ -434,6 +424,15 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6gfpt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtdx5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24jte")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmen4")
 }],
 "loop": true,
 "name": &"spindash_rev",
@@ -506,7 +505,7 @@ texture_filter = 1
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_bvi4d")
 animation = &"spindash"
-frame_progress = 0.8850219
+frame_progress = 0.18542086
 
 [node name="jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_b0me6")
@@ -527,7 +526,3 @@ stream = ExtResource("5_b872d")
 
 [node name="roll" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_nd6ml")
-
-[node name="sonicboom" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(0, -5)
-stream = ExtResource("9_7t0p5")
