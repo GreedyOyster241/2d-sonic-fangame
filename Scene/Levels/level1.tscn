@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://cx236gdnydn1k"]
+
+[ext_resource type="PackedScene" uid="uid://beht3ot0n4ok2" path="res://Scene/Levels/Assets/TestLevel/floor.tscn" id="1_ywe5b"]
+[ext_resource type="PackedScene" uid="uid://snrnyr1kjbk1" path="res://Objects/Collectibles/Ring.tscn" id="2_rcpsi"]
+[ext_resource type="PackedScene" uid="uid://dmpfy4766mw81" path="res://Scene/HUD/HUD.tscn" id="3_jp67a"]
+[ext_resource type="PackedScene" uid="uid://dnc4qapq7gqsw" path="res://Scene/Levels/Assets/TestLevel/floor_small.tscn" id="4_ph0ai"]
+[ext_resource type="PackedScene" uid="uid://cmnxbfv5hbswy" path="res://Objects/newPlayer/newplayer.tscn" id="5_wm1ka"]
+[ext_resource type="AudioStream" uid="uid://df37lg085sx4f" path="res://ost.mp3" id="6_7o4ir"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" parent="." instance=ExtResource("1_ywe5b")]
+position = Vector2(5, 155)
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("1_ywe5b")]
+position = Vector2(2542, 155)
+
+[node name="Ring" parent="." instance=ExtResource("2_rcpsi")]
+position = Vector2(78, 120)
+
+[node name="HUD" parent="." instance=ExtResource("3_jp67a")]
+
+[node name="StaticBody2D3" parent="." instance=ExtResource("4_ph0ai")]
+position = Vector2(-229, 57)
+
+[node name="StaticBody2D4" parent="." instance=ExtResource("4_ph0ai")]
+position = Vector2(-402, 10)
+
+[node name="StaticBody2D5" parent="." instance=ExtResource("4_ph0ai")]
+position = Vector2(-522, -32)
+
+[node name="StaticBody2D6" parent="." instance=ExtResource("4_ph0ai")]
+position = Vector2(-400, -111)
+
+[node name="Player" parent="." instance=ExtResource("5_wm1ka")]
+
+[node name="OST" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_7o4ir")
+autoplay = true
+
+[connection signal="ring_collected" from="Ring" to="HUD" method="ring_collected"]

@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7xhkifd0jie1"]
+
+[ext_resource type="FontFile" uid="uid://daj2nofvpc3fm" path="res://fonts/BoldPixels.otf" id="1_3tmun"]
+[ext_resource type="Script" uid="uid://cwxiydwfv3t4r" path="res://Scene/Pause/pause.gd" id="1_3yg6d"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_3yg6d")
+
+[node name="Resume" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -210.0
+offset_right = 112.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_3tmun")
+theme_override_font_sizes/font_size = 75
+text = "Resume"
+icon_alignment = 1
+
+[node name="Restart" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.5
+offset_top = -42.0
+offset_right = 123.5
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_3tmun")
+theme_override_font_sizes/font_size = 75
+text = "Restart"
+icon_alignment = 1
+
+[node name="Exit" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -74.5
+offset_top = 140.0
+offset_right = 74.5
+offset_bottom = 224.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_3tmun")
+theme_override_font_sizes/font_size = 75
+text = "Exit"
+
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

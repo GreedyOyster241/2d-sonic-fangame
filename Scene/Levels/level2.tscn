@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dewy5w88kfl7m"]
+
+[ext_resource type="PackedScene" uid="uid://beht3ot0n4ok2" path="res://Scene/Levels/Assets/TestLevel/floor.tscn" id="1_25pfu"]
+[ext_resource type="PackedScene" uid="uid://dnc4qapq7gqsw" path="res://Scene/Levels/Assets/TestLevel/floor_small.tscn" id="2_7vk44"]
+[ext_resource type="PackedScene" uid="uid://ct5mc1gk0gqw5" path="res://Objects/Player/Player.tscn" id="3_r3npq"]
+[ext_resource type="AudioStream" uid="uid://df37lg085sx4f" path="res://ost.mp3" id="4_6w4w0"]
+[ext_resource type="PackedScene" uid="uid://dmpfy4766mw81" path="res://Scene/HUD/HUD.tscn" id="5_x4pg1"]
+[ext_resource type="PackedScene" uid="uid://snrnyr1kjbk1" path="res://Objects/Collectibles/Ring.tscn" id="6_nae4n"]
+[ext_resource type="PackedScene" uid="uid://b7xhkifd0jie1" path="res://Scene/Pause/Pause.tscn" id="7_f1rtb"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" parent="." instance=ExtResource("1_25pfu")]
+position = Vector2(-11797.999, 270)
+scale = Vector2(10, 10)
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("1_25pfu")]
+position = Vector2(2542, 155)
+
+[node name="StaticBody2D3" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-229, 57)
+
+[node name="StaticBody2D4" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-402, 10)
+
+[node name="StaticBody2D5" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-667, -55)
+
+[node name="StaticBody2D7" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-1131, -213)
+
+[node name="StaticBody2D8" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-1373, -277)
+
+[node name="StaticBody2D6" parent="." instance=ExtResource("2_7vk44")]
+position = Vector2(-899, -138)
+
+[node name="Sonic" parent="." instance=ExtResource("3_r3npq")]
+position = Vector2(0, -1203)
+
+[node name="OST" type="AudioStreamPlayer2D" parent="Sonic"]
+stream = ExtResource("4_6w4w0")
+autoplay = true
+
+[node name="HUD" parent="." instance=ExtResource("5_x4pg1")]
+
+[node name="Ring" parent="." instance=ExtResource("6_nae4n")]
+position = Vector2(78, 120)
+
+[node name="Pause" parent="." instance=ExtResource("7_f1rtb")]
+process_mode = 3
+
+[connection signal="ring_collected" from="Ring" to="HUD" method="ring_collected"]

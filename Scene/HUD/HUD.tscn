@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmpfy4766mw81"]
+
+[ext_resource type="Script" uid="uid://cqvbklhi6l66y" path="res://Scene/HUD/HUD.gd" id="1_0apqc"]
+[ext_resource type="FontFile" uid="uid://daj2nofvpc3fm" path="res://fonts/BoldPixels.otf" id="2_i7jdr"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_0apqc")
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Ring_" type="RichTextLabel" parent="Hud"]
+texture_filter = 1
+offset_left = 25.0
+offset_top = 47.0
+offset_right = 125.0
+offset_bottom = 74.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("2_i7jdr")
+theme_override_font_sizes/normal_font_size = 25
+text = "Ring:"
+
+[node name="RingAmt" type="RichTextLabel" parent="Hud/Ring_"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 59.0
+offset_top = -7.0
+offset_right = 99.0
+offset_bottom = 33.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("2_i7jdr")
+theme_override_font_sizes/normal_font_size = 25
+text = "0"
+tab_size = 3
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="Hud"]
+
+[node name="Time" type="RichTextLabel" parent="Hud"]
+texture_filter = 1
+offset_left = 22.0
+offset_top = 18.0
+offset_right = 144.0
+offset_bottom = 45.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("2_i7jdr")
+theme_override_font_sizes/normal_font_size = 25
+text = "Time:"
+
+[node name="TimeAmt" type="RichTextLabel" parent="Hud/Time"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 59.0
+offset_top = -7.0
+offset_right = 122.0
+offset_bottom = 33.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/normal_font = ExtResource("2_i7jdr")
+theme_override_font_sizes/normal_font_size = 25
+text = "0:00"
+tab_size = 3
+vertical_alignment = 1

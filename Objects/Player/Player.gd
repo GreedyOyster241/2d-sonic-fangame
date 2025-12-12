@@ -4,13 +4,16 @@ extends CharacterBody2D
 var run_speed: float = 800.0      # Max speed
 var run_threshold: float = 300.0   # Speed at which Sonic can skid
 var acceleration: float = 500.0    # How fast Sonic gets to max speed
-var jump_speed: float = -1200.0    # More negative = higher jump
+var jump_speed: float = -700.0    # More negative = higher jump
 
 var friction: float = 1250.0       # How fast Sonic stops
 var turn_acceleration: float = 1000.0
 
 var fall_speed: float = 2400.0     # Max falling speed
-var gravity: float = 4000.0        # How fast Sonic reaches fall speed
+const NORMAL_GRAVITY := 1500.0
+const STOMP_GRAVITY := 5000.0
+const STOMP_SPEED := 700.0
+var gravity: float = 1500.0        # How fast Sonic reaches fall speed
 
 # --- Direction ---
 var direction: float = 0.0         # Input direction (1 = right, -1 = left)
@@ -23,11 +26,19 @@ var is_skidding: bool = false
 var ball: bool = false
 var speedtimer = 0.0
 var sonicboombool = false
+var is_stomping: bool = false
+
 
 var spindashing: bool = false      # true while in spindash charge state
 var speed_charge: float = 0.0
 
 var current_anim: String = ""
+
+func hit_stop(timeScale, duration):
+	Engine.time_scale = timeScale
+	var timer = get_tree().create_timer(timeScale * duration)
+	await timer.timeout
+	Engine.time_scale = 1
 
 
 func get_input() -> void:
@@ -36,7 +47,6 @@ func get_input() -> void:
 	var down := Input.is_action_pressed("Down")
 	var up := Input.is_action_pressed("Up")
 	var jump_pressed := Input.is_action_just_pressed("Jump")
-	var jump_held := Input.is_action_pressed("Jump")
 	
 	# --- Facing / last direction ---
 	if right:
@@ -97,11 +107,21 @@ func _gravity(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, fall_speed, gravity * delta)
 
 
+
 func _physics_process(delta: float) -> void:
 	
-	
+	if $".".position.y > 1000:
+		$".".position.y = 0
+		$".".position.x = 0
+		
+		
 	_gravity(delta)
 	get_input()
+	
+	# --- Variable jump height ---
+	if not Input.is_action_pressed("Jump") and velocity.y < 0:
+		velocity.y *= 0.3    # higher = floatier, lower = sharper
+
 	
 	sonicboombool = false
 	direction = Input.get_axis("Left", "Right")
@@ -112,10 +132,22 @@ func _physics_process(delta: float) -> void:
 	else:
 		speedtimer = 0
 
-	
+	var max_offset := 200.0
+	var target_offset := 0.0
+
+	#Use velocity, not input, to decide camera lead
+	if abs(velocity.x) > 500.0:
+		target_offset = clamp(velocity.x / 5.0, -max_offset, max_offset)
+	else:
+		target_offset = 0.0
+
+	var weight = clamp(delta * 8.0, 0.0, 1.0)
+	$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset, weight)
+
+
 	# --- Movement / acceleration ---
 	if spindashing and is_on_floor() and Input.is_action_pressed("Down"):
-		# Stay in place while charging spindash
+		# Stay in place while charging spindashd
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 	else:
 		if direction != 0.0:
@@ -133,7 +165,9 @@ func _physics_process(delta: float) -> void:
 				run_speed = 800    # normal speed
 
 		else:
+		
 			velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+		
 	
 	# --- Skidding (disabled while ball/spindash) ---
 	if is_on_floor() and not ball and not spindashing:
@@ -154,8 +188,30 @@ func _physics_process(delta: float) -> void:
 		# End roll when too slow or airborne
 		if abs(velocity.x) < 50.0 or not is_on_floor():
 			ball = false
+			
+	
+	
+
+	# --- STOMP LOGIC ---
+	if not is_on_floor() and not is_stomping and Input.is_action_just_pressed("Stomp or Bounce"):
+		is_stomping = true
+		ball = false  
+		velocity.y = STOMP_SPEED  
+
+# Stop stomp when you land
+	if is_on_floor() and is_stomping:
+		is_stomping = false
+
+# Gravity depends on stomp state
+	if is_stomping:
+		gravity = STOMP_GRAVITY
+	else:
+		gravity = NORMAL_GRAVITY
+
+		
 	
 	move_and_slide()
+
 	animation_handler()
 
 
@@ -163,7 +219,9 @@ func animation_handler() -> void:
 	var anim := ""
 	var jump_held := Input.is_action_pressed("Jump")
 	
-	if not is_on_floor():
+	if is_stomping and not is_on_floor():
+		anim = "stomp"
+	elif not is_stomping and not is_on_floor():
 		anim = "jump"
 	elif is_crouching and not spindashing:
 		anim = "down"
@@ -201,10 +259,13 @@ func animation_handler() -> void:
 func sound_handler(anim: String) -> void:
 	var runtrack := false
 	var steptrack := false
+	$Shockwave.emitting = false
 	
 	
 	if sonicboombool == true:
+		hit_stop(0.05, 0.6)
 		$sonicboom.play()
+		$Shockwave.emitting = true
 	
 	match anim:
 		"jump":
@@ -219,6 +280,7 @@ func sound_handler(anim: String) -> void:
 			steptrack = true
 			if not runtrack:
 				$wind.stop()
+				$"Camera2D".offset.x = 0
 		
 		"jog":
 			steptrack = true
@@ -229,10 +291,12 @@ func sound_handler(anim: String) -> void:
 			$wind.play()
 			runtrack = true
 			steptrack = true
+			
 		
 		"max_run":
 			runtrack = true
 			steptrack = true
+			$Trail2D.is_emitting = true
 			
 		"spindash_rev":
 			$roll.play()
@@ -243,6 +307,7 @@ func sound_handler(anim: String) -> void:
 		"default":
 			if not steptrack:
 				$footstep.stop()
+			$Trail2D.is_emitting = false
 		
 		_:
 			pass
