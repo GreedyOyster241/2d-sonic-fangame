@@ -13,7 +13,7 @@ func _ready() -> void:
 
 # Handle collisions with the player
 # Could Possibly have errors where 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	if !collected:
 		collected = true
 		emit_signal("ring_collected")

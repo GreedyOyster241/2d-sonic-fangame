@@ -41,6 +41,11 @@ func hit_stop(timeScale, duration):
 	Engine.time_scale = 1
 
 
+func badnik_bounce() -> void:
+	print("badnikBounce is Called")
+	velocity.y = -jump_speed
+	
+
 func get_input() -> void:
 	var right := Input.is_action_pressed("Right")
 	var left := Input.is_action_pressed("Left")
@@ -73,14 +78,18 @@ func get_input() -> void:
 	
 	# --- Spindash RELEASE (let go of Down while spindashing) ---
 	if spindashing and is_on_floor() and not down:
-		var dir := last_direction
-		if dir == 0:
-			dir = 1
+		var facing = 0
+		if $AnimatedSprite2D.flip_h == false:
+			facing = 1
+		else:
+			facing = -1
 		
-		velocity.x = dir * speed_charge
+		velocity.x = facing * speed_charge
 		ball = true              # turn into ball after release
 		spindashing = false
 		speed_charge = 0.0
+		
+	
 	
 	# --- Normal jump (only if not holding Down or in spindash) ---
 	if is_on_floor() and jump_pressed and not down and not spindashing:
@@ -106,9 +115,32 @@ func previous_direction() -> void:
 func _gravity(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, fall_speed, gravity * delta)
 
+func camera_handler(delta: float) -> void:
+	var max_offset := 200.0
+	var target_offset := 0.0
 
+	#Use velocity, not input, to decide camera lead
+	if abs(velocity.x) > 500.0:
+		target_offset = clamp(velocity.x / 5.0, -max_offset, max_offset)
+	else:
+		target_offset = 0.0
+
+	var weight = clamp(delta * 8.0, 0.0, 1.0)
+	$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset, weight)
+	
+	if is_looking_up == true:
+		$Camera2D.offset.y = lerpf($Camera2D.offset.y, -150, weight)
+	else:
+		$Camera2D.offset.y = lerpf($Camera2D.offset.y, 0, weight)
+	if is_crouching == true:
+		$Camera2D.offset.y = lerpf($Camera2D.offset.y, 150, weight)
+	elif spindashing == true or is_crouching == false:
+		$Camera2D.offset.y = lerpf($Camera2D.offset.y, 0, weight)
 
 func _physics_process(delta: float) -> void:
+	
+	#if Sonics Hurtbox collides with enemy's hurtbox
+	#call
 	
 	if $".".position.y > 1000:
 		$".".position.y = 0
@@ -117,6 +149,8 @@ func _physics_process(delta: float) -> void:
 		
 	_gravity(delta)
 	get_input()
+	
+	camera_handler(delta)
 	
 	# --- Variable jump height ---
 	if not Input.is_action_pressed("Jump") and velocity.y < 0:
@@ -132,22 +166,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		speedtimer = 0
 
-	var max_offset := 200.0
-	var target_offset := 0.0
-
-	#Use velocity, not input, to decide camera lead
-	if abs(velocity.x) > 500.0:
-		target_offset = clamp(velocity.x / 5.0, -max_offset, max_offset)
-	else:
-		target_offset = 0.0
-
-	var weight = clamp(delta * 8.0, 0.0, 1.0)
-	$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset, weight)
-
+	
 
 	# --- Movement / acceleration ---
 	if spindashing and is_on_floor() and Input.is_action_pressed("Down"):
-		# Stay in place while charging spindashd
+		
+		# Stay in place while charging spindash
+		#$Camera2D.offset.y = lerpf($Camera2D.offset.y, -11.42, 2)
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 	else:
 		if direction != 0.0:
@@ -155,7 +180,6 @@ func _physics_process(delta: float) -> void:
 				velocity.x = move_toward(velocity.x, direction * run_speed, turn_acceleration * delta)
 			else:
 				velocity.x = move_toward(velocity.x, direction * run_speed, acceleration * delta)
-			
 			# --- SPEED BOOST WHEN HOLDING MAX SPEED ---
 			if speedtimer >= 3.0:
 				run_speed = 1300   # boosted speed

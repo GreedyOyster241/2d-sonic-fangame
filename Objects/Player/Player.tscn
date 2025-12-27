@@ -507,8 +507,6 @@ debug_color = Color(0.9607843, 0, 0, 0.41960785)
 texture_filter = 1
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_bvi4d")
-animation = &"spindash"
-frame_progress = 0.8850219
 
 [node name="jump" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_b0me6")
