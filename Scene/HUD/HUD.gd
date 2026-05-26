@@ -1,10 +1,11 @@
 extends Node
 
-#var ringCount: int = $Hud/Ring_/RingAmt.text
+#var ringCount: int = $Hud/RingAmt.text
 
 
 var is_blinking_zero := false
 var elapsed_time: float = 0.0
+
 
 
 
@@ -40,6 +41,10 @@ func blink_zero() -> void:
 
 func ring_collected() -> void:
 	$Hud/RingAmt.text = str(int($Hud/RingAmt.text) + 1)
+
+func ring_loss() -> void:
+	if str(int($Hud/RingAmt.text)) != "0":
+		$Hud/RingAmt.text = 0
 
 func _ready() -> void:
 	$Hud/Timer.start()

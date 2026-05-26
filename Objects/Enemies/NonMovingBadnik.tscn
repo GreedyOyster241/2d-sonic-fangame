@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://qwpmjgafvn3r"]
+[gd_scene format=3 uid="uid://qwpmjgafvn3r"]
 
 [ext_resource type="Script" uid="uid://catty5paygdrt" path="res://Objects/Enemies/Badnik.gd" id="1_1u1yc"]
 [ext_resource type="Texture2D" uid="uid://j3a3qj858rwo" path="res://sprites/Placeholder/Square-0001.png" id="1_3lksl"]
@@ -19,20 +19,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gm7v3"]
 size = Vector2(30, 30)
 
-[node name="Badnik" type="Area2D"]
+[node name="Badnik" type="Area2D" unique_id=2106896433]
 script = ExtResource("1_1u1yc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=260901359]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1u1yc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=21122534]
 shape = SubResource("RectangleShape2D_gm7v3")
 
-[node name="boom" type="AudioStreamPlayer2D" parent="."]
+[node name="boom" type="AudioStreamPlayer2D" parent="." unique_id=103853430]
 stream = ExtResource("3_gm7v3")
 
-[node name="Explosion" parent="." instance=ExtResource("2_d6gbs")]
+[node name="Explosion" parent="." unique_id=77269441 instance=ExtResource("2_d6gbs")]
 scale = Vector2(0.5, 0.5)
 
 [connection signal="badnik_bounce" from="." to="." method="badnik_bounce"]

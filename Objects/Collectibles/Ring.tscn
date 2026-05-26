@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://snrnyr1kjbk1"]
 
-[ext_resource type="Texture2D" uid="uid://b7iuam1ket2xh" path="res://sprites/ringsheet_transparent.png" id="1_jlbn8"]
+[ext_resource type="Texture2D" uid="uid://b7iuam1ket2xh" path="res://sprites/items/ringsheet_transparent.png" id="1_jlbn8"]
 [ext_resource type="Script" uid="uid://ml4j1kh74hae" path="res://Objects/Collectibles/Ring.gd" id="1_uso5j"]
 [ext_resource type="AudioStream" uid="uid://ccupplch2u8m1" path="res://Objects/Collectibles/ring.wav" id="3_slkuy"]
 
