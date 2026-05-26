@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://isnhxluf3o33"]
+
+[ext_resource type="FontFile" uid="uid://daj2nofvpc3fm" path="res://fonts/BoldPixels.otf" id="1_hk64j"]
+[ext_resource type="Texture2D" uid="uid://cub8a464qt0l5" path="res://Scene/HUD/sonic_the_hedgehog____yuji_uekawa_____full_body__by_angelat121_dgfgabu-fullview (1).png" id="2_q627a"]
+
+[node name="Node2D" type="Node2D" unique_id=282156077]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=541812139]
+
+[node name="Black" type="ColorRect" parent="CanvasLayer" unique_id=1327091928]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[node name="ZoneName" type="RichTextLabel" parent="CanvasLayer" unique_id=1775029142]
+texture_filter = 1
+offset_left = 640.0
+offset_top = 264.0
+offset_right = 1088.0
+offset_bottom = 320.0
+theme_override_fonts/normal_font = ExtResource("1_hk64j")
+theme_override_font_sizes/normal_font_size = 50
+text = "TEST STAGE ZONE"
+
+[node name="ZoneName2" type="RichTextLabel" parent="CanvasLayer" unique_id=1557106329]
+texture_filter = 1
+offset_left = 16.0
+offset_top = 632.0
+offset_right = 784.0
+offset_bottom = 672.0
+theme_override_fonts/normal_font = ExtResource("1_hk64j")
+theme_override_font_sizes/normal_font_size = 40
+text = "Playing: Somewhere to Be.. For Test Stage"
+
+[node name="SonicTheHedgehogYujiUekawaFullBodyByAngelat121DgfgabuFullview(1)" type="Sprite2D" parent="CanvasLayer" unique_id=923747780]
+texture_filter = 1
+position = Vector2(1096, 304)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_q627a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1622285245]

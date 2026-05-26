@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://qjviolp8ibxk"]
+
+[ext_resource type="Texture2D" uid="uid://dxcbqt4m4ovru" path="res://Scene/Levels/TestLevel/Assets/1.png" id="1_aoi13"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=942015486]
+scale = Vector2(2.2, 2.22)
+transform = Transform2D(2.2, 0, 0, 2.22, 0, 0)
+follow_viewport_enabled = true
+
+[node name="1" type="Parallax2D" parent="." unique_id=972579722]
+repeat_size = Vector2(576, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="1" unique_id=1752872487]
+texture_filter = 1
+texture = ExtResource("1_aoi13")

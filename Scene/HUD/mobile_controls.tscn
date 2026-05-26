@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://cmi1jne33eipb"]
+
+[ext_resource type="Script" uid="uid://dno8r8pd1h6ve" path="res://addons/virtual_joystick_plus/virtual_joystick_plus.gd" id="1_hg4f1"]
+[ext_resource type="Script" uid="uid://y7vsr4arnji3" path="res://Scene/HUD/mobile_controls.gd" id="1_ku6e4"]
+[ext_resource type="Texture2D" uid="uid://8cglu8y3ccji" path="res://addons/virtual_joystick_plus/resources/textures/joystick_texture_3.png" id="2_hg4f1"]
+[ext_resource type="Texture2D" uid="uid://2tov5eia4s8c" path="res://addons/virtual_joystick_plus/resources/textures/stick_texture_4.png" id="3_ku6e4"]
+[ext_resource type="Texture2D" uid="uid://bj3q4co6v64uq" path="res://Sonic.png" id="5_3we4n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3we4n"]
+size = Vector2(1500, 1100)
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1792902209]
+layer = 0
+script = ExtResource("1_ku6e4")
+
+[node name="VirtualJoystickPlus" type="Control" parent="." unique_id=1802868181]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 0
+offset_left = 64.0
+offset_top = 408.0
+offset_right = 364.0
+offset_bottom = 708.0
+pivot_offset = Vector2(150, 150)
+script = ExtResource("1_hg4f1")
+joystick_preset_texture = 3
+joystick_texture = ExtResource("2_hg4f1")
+stick_preset_texture = 4
+stick_texture = ExtResource("3_ku6e4")
+metadata/_custom_type_script = "uid://dno8r8pd1h6ve"
+
+[node name="Jump" type="TouchScreenButton" parent="." unique_id=1653431777]
+position = Vector2(872.00006, 519.99994)
+scale = Vector2(0.10169491, 0.12878792)
+texture_normal = ExtResource("5_3we4n")
+shape = SubResource("RectangleShape2D_3we4n")
+action = "Jump"
+
+[node name="Stomp" type="TouchScreenButton" parent="." unique_id=1944399231]
+modulate = Color(0.28633854, 0.51145107, 0, 1)
+position = Vector2(1056, 520)
+scale = Vector2(0.10169491, 0.12878792)
+texture_normal = ExtResource("5_3we4n")
+shape = SubResource("RectangleShape2D_3we4n")
+action = "Stomp or Bounce"

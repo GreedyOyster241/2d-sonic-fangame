@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyvtcm7wvaju3"]
+
+[ext_resource type="PackedScene" uid="uid://snrnyr1kjbk1" path="res://Objects/Collectibles/Ring.tscn" id="1_li23p"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Ring" parent="." instance=ExtResource("1_li23p")]
+
+[node name="Ring2" parent="." instance=ExtResource("1_li23p")]
+position = Vector2(30, 0)
+
+[node name="Ring3" parent="." instance=ExtResource("1_li23p")]
+position = Vector2(60, 0)
+
+[node name="Ring4" parent="." instance=ExtResource("1_li23p")]
+position = Vector2(90, 0)
+
+[node name="Ring5" parent="." instance=ExtResource("1_li23p")]
+position = Vector2(120, 0)
