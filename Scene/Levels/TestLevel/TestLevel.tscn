@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dmpfy4766mw81" path="res://Scene/HUD/HUD.tscn" id="5_1osqa"]
 [ext_resource type="PackedScene" uid="uid://b7xhkifd0jie1" path="res://Scene/Pause/Pause.tscn" id="7_fpwvv"]
 [ext_resource type="PackedScene" uid="uid://snrnyr1kjbk1" path="res://Objects/Collectibles/Ring.tscn" id="7_hiqmj"]
+[ext_resource type="PackedScene" uid="uid://isnhxluf3o33" path="res://Scene/HUD/Level_Opening.tscn" id="8_5473o"]
 [ext_resource type="Texture2D" uid="uid://vsgo1pus6quo" path="res://Scene/Levels/TestLevel/Assets/Tileset2.png" id="10_iqx1d"]
 [ext_resource type="PackedScene" uid="uid://cmi1jne33eipb" path="res://Scene/HUD/mobile_controls.tscn" id="10_uuhf5"]
 
@@ -165,3 +166,6 @@ position = Vector2(1072, -25)
 
 [node name="Ring7" parent="." unique_id=922923386 instance=ExtResource("7_hiqmj")]
 position = Vector2(1104, -25)
+
+[node name="Level_Opening" parent="." unique_id=282156077 instance=ExtResource("8_5473o")]
+position = Vector2(702.7573, 827.58514)

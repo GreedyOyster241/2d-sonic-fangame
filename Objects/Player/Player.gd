@@ -4,7 +4,7 @@ extends CharacterBody2D
 # MOVEMENT TUNING
 # ─────────────────────────────────────────────
 var run_speed: float = 800.0          # Max horizontal speed
-var run_threshold: float = 300.0      # Speed at which Sonic can skid
+var run_threshold: float = 500.0      # Speed at which Sonic can skid
 var acceleration: float = 500.0       # How fast Sonic reaches max speed
 var jump_speed: float = -700.0        # More negative = higher jump
 var friction: float = 1750.0          # How fast Sonic stops
@@ -36,6 +36,9 @@ var ball: bool = false
 var spindashing: bool = false
 var speed_charge: float = 0.0
 
+var charging_peelout: bool = false
+var peelout: bool = false
+
 # ─────────────────────────────────────────────
 # SONIC BOOM
 # ─────────────────────────────────────────────
@@ -48,6 +51,8 @@ var sonicboom_sustain: bool = false  # Locks the boom so it doesn't re-trigger
 # ─────────────────────────────────────────────
 var current_anim: String = ""
 var tween: Tween
+
+var looktimer = 0
 
 signal ring_loss
 
@@ -86,6 +91,7 @@ func get_input() -> void:
 	var down         := Input.is_action_pressed("Down")
 	var up           := Input.is_action_pressed("Up")
 	var jump_pressed := Input.is_action_just_pressed("Jump")
+	var jump_held := Input.is_action_pressed("Jump")
 
 	# Facing direction
 	if right:
@@ -95,12 +101,42 @@ func get_input() -> void:
 		$AnimatedSprite2D.flip_h = true
 		last_direction = -1
 
+	# Up + Peelout Charge
+	if is_on_floor() and up and abs(velocity.x) < 10.0:
+		is_looking_up = true
+		if jump_held:
+			peelout = true
+			is_looking_up = false
+			speed_charge = clamp(speed_charge + 30.0, 200.0, 2000.0)
+	else:
+		if not peelout:
+			is_looking_up = false
+			
+	
+	if peelout and is_on_floor() and not up:
+		if speed_charge >= 800:
+			$peeloutrelease.play()
+		var facing := -1 if $AnimatedSprite2D.flip_h else 1
+		velocity.x   = facing * speed_charge
+		
+		#if activates at certain speed, activate sonic boom
+		#TODO: ONLY WORKS WHEN ALREADY MOVING
+		if speed_charge >= 2000:
+			sonicboombool = true
+			speedtimer = 4.0
+		else:
+			speedtimer = 0
+			
+		peelout  = false
+		speed_charge = 0.0
+	
+	
 	# Crouch + spindash charge
 	if is_on_floor() and down and abs(velocity.x) < 10.0:
 		is_crouching = true
 		if jump_pressed:
 			spindashing  = true
-			speed_charge = clamp(speed_charge + 500.0, 200.0, 2500.0)
+			speed_charge = clamp(speed_charge + 500.0, 200.0, 2000.0)
 	else:
 		if not spindashing:
 			is_crouching = false
@@ -114,11 +150,11 @@ func get_input() -> void:
 		speed_charge = 0.0
 
 	# Normal jump
-	if is_on_floor() and jump_pressed and not down and not spindashing:
+	if is_on_floor() and jump_pressed and not down and not spindashing and not up and not peelout:
 		velocity.y = jump_speed
 
 	# Look up
-	is_looking_up = up and is_on_floor() and velocity.x == 0.0 and not spindashing and not is_crouching
+
 
 
 # ─────────────────────────────────────────────
@@ -127,21 +163,32 @@ func get_input() -> void:
 
 func camera_handler(delta: float) -> void:
 	var max_offset    := 200.0
-	var target_offset := 0.0
+	var target_offset_x := 0.0
+	var weight: float = clamp(delta * 8.0, 0.0, 1.0)
+	
+	
 
 	if abs(velocity.x) > 500.0:
-		target_offset = clamp(velocity.x / 5.0, -max_offset, max_offset)
-
-	var weight: float = clamp(delta * 8.0, 0.0, 1.0)
-	$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset, weight)
+		target_offset_x = clamp(velocity.x / 5.0, -max_offset, max_offset)
+		$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset_x, weight)
 
 	# Vertical camera offset
-	if is_looking_up:
-		$Camera2D.offset.y = lerpf($Camera2D.offset.y, -150.0, weight)
-	elif is_crouching:
-		$Camera2D.offset.y = lerpf($Camera2D.offset.y,  150.0, weight)
+	#TODO: even if you lightly tap up or down, timer still runs; needs a timer that 
+	
+	if velocity.x == 0 and velocity.y == 25 and is_looking_up or is_crouching:
+		looktimer += delta
+		print(looktimer)
 	else:
-		$Camera2D.offset.y = lerpf($Camera2D.offset.y,    0.0, weight)
+		looktimer = 0
+		
+	if is_looking_up and not peelout:
+		if looktimer >= 1:
+			$Camera2D.offset.y = lerpf($Camera2D.offset.y, -150.0, weight)
+	elif is_crouching and not spindashing:
+		if looktimer >= 1:
+			$Camera2D.offset.y = lerpf($Camera2D.offset.y,  150.0, weight)
+	else:
+		$Camera2D.offset.y = lerpf($Camera2D.offset.y, 0.0, weight)
 
 
 # ─────────────────────────────────────────────
@@ -163,9 +210,11 @@ func _on_player_child_entered_tree(area: Area2D) -> void:
 
 func _physics_process(delta: float) -> void:
 
+
 	# Kill plane
 	if position.y > 1000:
-		position = Vector2.ZERO
+		position.x = 0
+		position.y = -100
 
 	_gravity(delta)
 	get_input()
@@ -272,6 +321,8 @@ func animation_handler() -> void:
 		anim = "jump"
 	elif is_crouching and not spindashing:
 		anim = "down"
+	elif peelout:
+		anim = "peelout" 
 	elif is_looking_up:
 		anim = "look_up"
 	elif is_skidding:
@@ -305,6 +356,8 @@ func sound_handler(anim: String) -> void:
 	$Shockwave.emitting = false
 
 	match anim:
+		"peelout":
+			$peelout.play()
 		"jump":
 			$jump.play()
 			await get_tree().create_timer(0.24).timeout

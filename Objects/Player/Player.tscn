@@ -9,7 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://b1sq5grex7x7b" path="res://Objects/Player/SFX/roll.mp3" id="6_nd6ml"]
 [ext_resource type="AudioStream" uid="uid://7n7gltfimw2i" path="res://Objects/Player/SFX/footstep.mp3" id="6_y01d7"]
 [ext_resource type="AudioStream" uid="uid://d3ityqwmrulch" path="res://Objects/Player/SFX/sonicboom_.wav" id="9_7t0p5"]
+[ext_resource type="AudioStream" uid="uid://bis1qu3axal6d" path="res://Objects/Player/SFX/peelout.mp3" id="9_q10m3"]
 [ext_resource type="PackedScene" uid="uid://c6mjnv6m4wic6" path="res://addons/trail/trail_2d.tscn" id="10_ebgc0"]
+[ext_resource type="AudioStream" uid="uid://dcol4j5b4aiur" path="res://Objects/Player/SFX/peelout_release.mp3" id="10_ufaat"]
 [ext_resource type="PackedScene" uid="uid://bjbpgtip2070b" path="res://addons/shockwave/shockwave.tscn" id="11_1ggq4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cac6a"]
@@ -111,6 +113,22 @@ region = Rect2(64, 256, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_idx2i"]
 atlas = ExtResource("2_oansn")
 region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05p8q"]
+atlas = ExtResource("2_oansn")
+region = Rect2(128, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdin2"]
+atlas = ExtResource("2_oansn")
+region = Rect2(192, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipd3g"]
+atlas = ExtResource("2_oansn")
+region = Rect2(256, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nigmo"]
+atlas = ExtResource("2_oansn")
+region = Rect2(320, 384, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cnje6"]
 atlas = ExtResource("2_oansn")
@@ -358,6 +376,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_05p8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdin2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipd3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nigmo")
+}],
+"loop": true,
+"name": &"peelout",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_cnje6")
 }, {
 "duration": 1.0,
@@ -522,7 +557,8 @@ script = ExtResource("1_we6tp")
 texture_filter = 1
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_bvi4d")
-animation = &"hurt"
+animation = &"peelout"
+frame_progress = 0.9695886
 
 [node name="RingDrop" type="AudioStreamPlayer" parent="." unique_id=2081885493]
 stream = SubResource("AudioStreamMP3_1ggq4")
@@ -546,6 +582,14 @@ stream = ExtResource("5_b872d")
 
 [node name="roll" type="AudioStreamPlayer2D" parent="." unique_id=816736180]
 stream = ExtResource("6_nd6ml")
+
+[node name="peelout" type="AudioStreamPlayer" parent="." unique_id=1406168739]
+stream = ExtResource("9_q10m3")
+volume_db = -8.667
+
+[node name="peeloutrelease" type="AudioStreamPlayer" parent="." unique_id=1281642894]
+stream = ExtResource("10_ufaat")
+volume_db = -11.797
 
 [node name="sonicboom" type="AudioStreamPlayer2D" parent="." unique_id=1797183806]
 position = Vector2(0, -5)

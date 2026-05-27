@@ -1,9 +1,120 @@
 [gd_scene format=3 uid="uid://isnhxluf3o33"]
 
 [ext_resource type="FontFile" uid="uid://daj2nofvpc3fm" path="res://fonts/BoldPixels.otf" id="1_hk64j"]
+[ext_resource type="Script" uid="uid://bp5xp51363h7h" path="res://Scene/HUD/Level_Opening.gd" id="1_q627a"]
 [ext_resource type="Texture2D" uid="uid://cub8a464qt0l5" path="res://Scene/HUD/sonic_the_hedgehog____yuji_uekawa_____full_body__by_angelat121_dgfgabu-fullview (1).png" id="2_q627a"]
 
-[node name="Node2D" type="Node2D" unique_id=282156077]
+[sub_resource type="Animation" id="Animation_hk64j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/SonicTheHedgehogYujiUekawaFullBodyByAngelat121DgfgabuFullview(1):position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1096, 304)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ZoneName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(640, 264)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/ZoneName2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Black:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_q627a"]
+resource_name = "stage-open"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/SonicTheHedgehogYujiUekawaFullBodyByAngelat121DgfgabuFullview(1):position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.3, 2.9666667),
+"transitions": PackedFloat32Array(0.1250001, 0.12500028, 0.1250001),
+"update": 0,
+"values": [Vector2(1500, 304), Vector2(1096, 304), Vector2(1500, 304)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/ZoneName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.3, 2.9666667),
+"transitions": PackedFloat32Array(0.125, 0.125, 0.125),
+"update": 0,
+"values": [Vector2(-5, 264), Vector2(640, 264), Vector2(-500, 264)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/ZoneName2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.06666666, 1, 2.3, 2.9333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Black:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.3, 2.9333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iac3s"]
+_data = {
+&"RESET": SubResource("Animation_hk64j"),
+&"stage-open": SubResource("Animation_q627a")
+}
+
+[node name="Level_Opening" type="Node2D" unique_id=282156077]
+script = ExtResource("1_q627a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=541812139]
 
@@ -16,7 +127,7 @@ color = Color(0.012617188, 0.012617188, 0.012617188, 1)
 texture_filter = 1
 offset_left = 640.0
 offset_top = 264.0
-offset_right = 1088.0
+offset_right = 1087.9968
 offset_bottom = 320.0
 theme_override_fonts/normal_font = ExtResource("1_hk64j")
 theme_override_font_sizes/normal_font_size = 50
@@ -39,3 +150,4 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_q627a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1622285245]
+libraries/ = SubResource("AnimationLibrary_iac3s")
