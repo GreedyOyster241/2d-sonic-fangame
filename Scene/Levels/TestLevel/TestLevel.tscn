@@ -128,6 +128,7 @@ environment = SubResource("Environment_s4lm2")
 
 [node name="Pause" parent="." unique_id=1387638829 instance=ExtResource("7_fpwvv")]
 process_mode = 3
+layer = 2
 
 [node name="CanvasLayer" parent="." unique_id=1792902209 instance=ExtResource("10_uuhf5")]
 
@@ -168,4 +169,5 @@ position = Vector2(1072, -25)
 position = Vector2(1104, -25)
 
 [node name="Level_Opening" parent="." unique_id=282156077 instance=ExtResource("8_5473o")]
+texture_filter = 1
 position = Vector2(702.7573, 827.58514)

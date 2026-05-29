@@ -152,6 +152,24 @@ func get_input() -> void:
 	# Normal jump
 	if is_on_floor() and jump_pressed and not down and not spindashing and not up and not peelout:
 		velocity.y = jump_speed
+		
+		# if jump is held during the jump
+		# speed charge, play peelout sound
+		# if the player lands on the ground after the jump being held
+		# release drop dash, turn player into ball
+		# drop dash
+		if jump_held:
+			print("Charging drop dash...") 
+			#print(speed_charge)
+			#speed_charge = clamp(speed_charge + 300.0, 200.0, 2000.0)
+			#$peelout.play()
+		#if is_on_floor() and jump_held:
+			#print("Release!")
+			#$roll.play()
+			#var facing := -1 if $AnimatedSprite2D.flip_h else 1
+			#velocity.x   = facing * speed_charge
+			#ball         = true
+			#speed_charge = 0.0
 
 	# Look up
 

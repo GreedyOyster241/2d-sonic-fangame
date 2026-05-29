@@ -1,7 +1,11 @@
 extends Node2D
 
-#TODO: FIX THIS PLEASE, IT ISNT PLAYING FOR SOME REASON :(
-func _ready() -> void:
-	await get_tree().create_timer(3).timeout
-	$Level_Opening/AnimationPlayer.play("stage-open")
+func _ready():
+	get_tree().paused = true
+	$AnimationPlayer.play("stage-open")
+	$AnimationPlayer.animation_finished.connect(_on_intro_finished)
+
+func _on_intro_finished(anim_name: StringName):
+	get_tree().paused = false
+	
 	

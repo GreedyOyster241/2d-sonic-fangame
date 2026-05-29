@@ -114,6 +114,7 @@ _data = {
 }
 
 [node name="Level_Opening" type="Node2D" unique_id=282156077]
+process_mode = 3
 script = ExtResource("1_q627a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=541812139]
