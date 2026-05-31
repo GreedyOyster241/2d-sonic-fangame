@@ -56,6 +56,7 @@ var looktimer = 0
 
 signal ring_loss
 
+var can_move:= true
 
 # ─────────────────────────────────────────────
 # UTILITY
@@ -81,6 +82,8 @@ func _gravity(delta: float) -> void:
 	velocity.y = move_toward(velocity.y, fall_speed, gravity * delta)
 
 
+
+
 # ─────────────────────────────────────────────
 # INPUT
 # ─────────────────────────────────────────────
@@ -101,19 +104,24 @@ func get_input() -> void:
 		$AnimatedSprite2D.flip_h = true
 		last_direction = -1
 
+	# TODO: fix issue where u can move during peelout
 	# Up + Peelout Charge
 	if is_on_floor() and up and abs(velocity.x) < 10.0:
 		is_looking_up = true
 		if jump_held:
+			velocity.x = 0
 			peelout = true
 			is_looking_up = false
 			speed_charge = clamp(speed_charge + 30.0, 200.0, 2000.0)
 	else:
 		if not peelout:
+			
 			is_looking_up = false
 			
+			
 	
-	if peelout and is_on_floor() and not up:
+	if peelout and is_on_floor() and not jump_held:
+		
 		if speed_charge >= 800:
 			$peeloutrelease.play()
 		var facing := -1 if $AnimatedSprite2D.flip_h else 1
@@ -158,8 +166,9 @@ func get_input() -> void:
 		# if the player lands on the ground after the jump being held
 		# release drop dash, turn player into ball
 		# drop dash
-		if jump_held:
-			print("Charging drop dash...") 
+		#TODO: FIX
+		#if jump_held:
+			#print("Charging drop dash...") 
 			#print(speed_charge)
 			#speed_charge = clamp(speed_charge + 300.0, 200.0, 2000.0)
 			#$peelout.play()
@@ -180,29 +189,26 @@ func get_input() -> void:
 # ─────────────────────────────────────────────
 
 func camera_handler(delta: float) -> void:
-	var max_offset    := 200.0
+	var max_offset    := 100.0
 	var target_offset_x := 0.0
 	var weight: float = clamp(delta * 8.0, 0.0, 1.0)
-	
-	
 
 	if abs(velocity.x) > 500.0:
 		target_offset_x = clamp(velocity.x / 5.0, -max_offset, max_offset)
 		$Camera2D.offset.x = lerpf($Camera2D.offset.x, target_offset_x, weight)
+	else:
+		$Camera2D.offset.x = lerpf($Camera2D.offset.x,  0, weight)
 
 	# Vertical camera offset
-	#TODO: even if you lightly tap up or down, timer still runs; needs a timer that 
-	
 	if velocity.x == 0 and velocity.y == 25 and is_looking_up or is_crouching:
 		looktimer += delta
-		print(looktimer)
 	else:
 		looktimer = 0
 		
 	if is_looking_up and not peelout:
 		if looktimer >= 1:
 			$Camera2D.offset.y = lerpf($Camera2D.offset.y, -150.0, weight)
-	elif is_crouching and not spindashing:
+	if is_crouching and not spindashing:
 		if looktimer >= 1:
 			$Camera2D.offset.y = lerpf($Camera2D.offset.y,  150.0, weight)
 	else:
@@ -228,6 +234,10 @@ func _on_player_child_entered_tree(area: Area2D) -> void:
 
 func _physics_process(delta: float) -> void:
 
+	if not can_move:
+			velocity.x = 0
+			velocity.y = 0
+			return
 
 	# Kill plane
 	if position.y > 1000:

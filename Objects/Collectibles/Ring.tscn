@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://snrnyr1kjbk1"]
+[gd_scene format=3 uid="uid://snrnyr1kjbk1"]
 
 [ext_resource type="Texture2D" uid="uid://b7iuam1ket2xh" path="res://sprites/items/ringsheet_transparent.png" id="1_jlbn8"]
 [ext_resource type="Script" uid="uid://ml4j1kh74hae" path="res://Objects/Collectibles/Ring.gd" id="1_uso5j"]
@@ -117,18 +117,18 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Ring" type="Area2D"]
+[node name="Ring" type="Area2D" unique_id=1219962931]
 script = ExtResource("1_uso5j")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=53293095]
 shape = SubResource("RectangleShape2D_ii06k")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1675000220]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_jlbn8")
 animation = &"collect"
 
-[node name="sfx_ring" type="AudioStreamPlayer2D" parent="."]
+[node name="sfx_ring" type="AudioStreamPlayer2D" parent="." unique_id=1742981580]
 stream = ExtResource("3_slkuy")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

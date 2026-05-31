@@ -557,8 +557,6 @@ script = ExtResource("1_we6tp")
 texture_filter = 1
 position = Vector2(0, -5)
 sprite_frames = SubResource("SpriteFrames_bvi4d")
-animation = &"peelout"
-frame_progress = 0.9695886
 
 [node name="RingDrop" type="AudioStreamPlayer" parent="." unique_id=2081885493]
 stream = SubResource("AudioStreamMP3_1ggq4")
@@ -623,6 +621,7 @@ shape = SubResource("CapsuleShape2D_1ggq4")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=415685539]
 scale = Vector2(2, 2)
+emitting = false
 texture = SubResource("GradientTexture2D_q10m3")
 lifetime = 0.37
 randomness = 0.06
